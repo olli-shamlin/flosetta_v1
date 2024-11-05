@@ -1,8 +1,8 @@
 .idea/
 .DS_Store
-data/*.numbers
-data/*.sqlite
-data/backup/*
+app/data/*.numbers
+app/data/*.sqlite
+app/data/backup/*
 
 ####################################################
 ####################################################
