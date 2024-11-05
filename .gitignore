@@ -1,3 +1,13 @@
+.idea/
+
+####################################################
+####################################################
+# Everything below this comment was generated
+# by github when I created the associated project
+# there.
+####################################################
+####################################################
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
