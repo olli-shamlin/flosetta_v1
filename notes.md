@@ -80,3 +80,8 @@ are
   - git clone https://github.com/olli-shamlin/flosetta.git
 - push to github
   - git push -u origin main
+- commit
+  - git commit -m 'comment goes here'
+  - UNDO
+    - PREFERRED: git revert
+    - RISKY: git reset
