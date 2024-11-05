@@ -1,0 +1,31 @@
+{% extends "base_quiz.html" %}
+
+{% block progress_area %}
+    <div class="row">
+        <div class="col-1" align="center" vertical-align="middle">
+            <button type="button" class="btn-close text-reset"></button>
+        </div>
+        <div class="col-10" align="center" vertical-align="middle">
+            <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                <div class="progress-bar" style="width: 30%"></div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block prompt_area %}
+    <div class="row">
+        <div class="col">
+            <p>PROMPT</p>
+        </div>
+    </div>
+{% endblock %}
+{% block response_area %}
+    <p>RESPONSE</p>
+{% endblock %}
+{% block feedback_area %}
+    <div class="row">
+        <div class="col">
+            <button type="button" class="btn btn-primary">Next</button>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <table id="vocab-table"
+        data-toggle="table"
+        data-pagination="true"
+        data-page-size="10"
+        data-page-list="[10, 25, 50, 100]"
+        data-search="true">
+        <thead>
+            <tr>
+                <th scope="col" data-sortable="true">English</th>
+                <th scope="col" data-sortable="true">Part of Speech</th>
+                <th scope="col" data-sortable="true">Romaji</th>
+                <th scope="col" data-sortable="true">Kana</th>
+                <th scope="col" data-sortable="true">Kanji</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for w in words %}
+                <tr>
+                    <td>
+                        {{ w.english }}
+                        {% if w.note %}
+                            <i class="bi bi-info-circle text-primary" data-bs-toggle="tooltip" title="{{ w.note }}">
+                            </i>
+                        {% endif %}
+                    </td>
+                    <td>{{ w.part_of_speech }}</td>
+                    <td>{{ w.romaji }}</td>
+                    <td>{{ w.kana }}</td>
+                    <td>{{ w.kanji }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

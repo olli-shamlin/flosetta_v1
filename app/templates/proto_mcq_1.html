@@ -1,0 +1,242 @@
+{% extends "base_quiz.html" %}
+{% block js_code %}
+
+    const trace_switch = true
+
+    function trace(msg, caller_name=null) {
+        if (trace_switch) {
+            if (caller_name == null) { caller_name = trace.caller.name }
+            console.log(`[ROSETTA ➤ ${caller_name}] ${msg}`)
+        }
+    }
+    function traceEnter(caller_name=null) {
+        if (trace_switch) {
+            if (caller_name == null) { caller_name = traceEnter.caller.name }
+            console.log(`[ROSETTA ➤ ${caller_name}] ↪︎ enter`)
+        }
+    }
+    function traceExit(caller_name=null) {
+        if (trace_switch) {
+            if (caller_name == null) { caller_name = traceExit.caller.name }
+            console.log(`[ROSETTA ➤ ${caller_name}] ↩︎ exit`)
+        }
+    }
+    function traceFatal(msg, caller_name=null) {
+        if (trace_switch) {
+            if (caller_name == null) { caller_name = traceFatal.caller.name }
+            console.log(`[ROSETTA ➤ ${caller_name}] FATAL ERROR: ${msg}`)
+        }
+        alert('FATAL ERROR: ' + msg)
+    }
+
+    function updatePrompt() {
+        traceEnter()
+        document.getElementById('prompt-word').innerText = items[current_item].prompt
+        traceExit()
+    }
+
+    function updateProgress() {
+        traceEnter()
+        // Note the "+ 1" to current_item; this routine is called when the "CHECK" button is clicked
+        // which is *before* current_item is incremented (in handleNextButton/i.e., when the "NEXT" button
+        // is clicked)
+        pct = (((current_item + 1) / item_count) * 100).toFixed() + '%'
+        document.getElementById('progress-bar').setAttribute('style', `width: ${pct}`)
+        traceExit()
+    }
+
+    function updateChoiceButtons() {
+        traceEnter()
+        for (let i = 0; i < items[current_item].choices.length; i++) {
+            document.getElementById(`choice-text-${i + 1}`).innerText = items[current_item].choices[i]
+            btn = document.getElementById(`choice-${i + 1}`)
+            btn.checked = false
+            btn.disabled = false
+        }
+        traceExit()
+    }
+
+    function handleCheckButton() {
+        traceEnter()
+
+        // disable the choice buttons
+        for (let i = 0; i < items[current_item].choices.length; i++)
+            document.getElementById(`choice-${i + 1}`).disabled = true
+
+        btn = document.getElementById('continue-btn')
+
+        // Did the user make the correct choice?
+        expected_answer = items[current_item].answer
+        i = 0
+        for (; i < items[current_item].choices.length; i++) {
+            next_input_element = document.getElementById(`choice-${i + 1}`);
+            is_selected = next_input_element.checked;
+            if (is_selected) { break };
+        }
+        if (i == item_count) {
+            traceFatal('did not find selected choice')
+        } else {
+            expected_answer = items[current_item].answer
+            given_answer = document.getElementById(`choice-text-${i + 1}`).innerText
+            correct_answer_given = given_answer == expected_answer
+
+            // Background colors: white=bg-white; green=bg-success; red=bg-danger
+            feedback_box = document.getElementById('feedback-box')
+            feedback_text = document.getElementById('feedback-message')
+            items[current_item].answered_correct = given_answer == expected_answer
+            if (items[current_item].answered_correct) {
+                items[current_item].answered_correct = true
+                feedback_box.setAttribute('class', 'container bg-success bg-opacity-10')
+                feedback_text.setAttribute('class', 'text-success')
+                feedback_text.innerText = 'Correct!'
+            } else {
+                feedback_box.setAttribute('class', 'container bg-danger bg-opacity-10')
+                feedback_text.setAttribute('class', 'text-danger')
+                feedback_text.innerText = 'Wrong!'
+            }
+            btn.setAttribute('class', 'btn btn-primary')
+            if (current_item + 1 == item_count) {
+                btn.innerText = 'DONE'
+            } else {
+                btn.innerText = 'NEXT'
+            }
+        }
+
+        updateProgress()
+
+        traceExit()
+    }
+
+    function handleNextButton() {
+        traceEnter()
+
+        current_item += 1
+
+        if (current_item == item_count) {
+            alert('we have reached the end of the list of items')
+        }
+
+        updatePrompt()
+        updateChoiceButtons()
+
+        el = document.getElementById('feedback-box')
+        el.setAttribute('class', 'container bg-white bg-opacity-10')
+        el = document.getElementById('feedback-message')
+        el.innerText = ''
+        el = document.getElementById('continue-btn')
+        el.setAttribute('class', 'btn btn-secondary disabled')
+        el.innerText = 'CHECK'
+
+        traceExit()
+    }
+
+    function continueClick() {
+        traceEnter()
+        btn = document.getElementById('continue-btn')
+        initial_btn_label = btn.innerText
+        trace(`button state/label = ${initial_btn_label}`)
+        if (initial_btn_label == 'CHECK') { handleCheckButton() }
+        else if (initial_btn_label == 'NEXT') { handleNextButton() }
+        else {
+            if (initial_btn_label != 'DONE') { traceFatal('not at "done" state as expected') }
+            trace('this condition should never be reached')
+        }
+        traceExit()
+    }
+
+    function choiceClick() {
+        traceEnter()
+        btn = document.getElementById('continue-btn')
+        if (btn.innerText != 'CHECK') { traceFatal(`"continue" button should be in "CHECK" state but is set to ${btn.innerText}`) }
+        document.getElementById('continue-btn').setAttribute('class', 'btn btn-outline-success')
+        traceExit()
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        traceEnter('DOMContentLoaded')
+        items = [
+            {prompt: 'PROMPT-1', answer: 'CHOICE-1a', choices: ['CHOICE-1a', 'CHOICE-2a', 'CHOICE-3a', 'CHOICE-4a', 'CHOICE-5a'], answered_correct: false},
+            {prompt: 'PROMPT-2', answer: 'CHOICE-1b', choices: ['CHOICE-1b', 'CHOICE-2b', 'CHOICE-3b', 'CHOICE-4b', 'CHOICE-5b'], answered_correct: false},
+            {prompt: 'PROMPT-3', answer: 'CHOICE-1c', choices: ['CHOICE-1c', 'CHOICE-2c', 'CHOICE-3c', 'CHOICE-4c', 'CHOICE-5c'], answered_correct: false},
+            {prompt: 'PROMPT-4', answer: 'CHOICE-1d', choices: ['CHOICE-1d', 'CHOICE-2d', 'CHOICE-3d', 'CHOICE-4d', 'CHOICE-5d'], answered_correct: false},
+            {prompt: 'PROMPT-5', answer: 'CHOICE-1e', choices: ['CHOICE-1e', 'CHOICE-2e', 'CHOICE-3e', 'CHOICE-4e', 'CHOICE-5e'], answered_correct: false},
+        ];
+        item_count = items.length;
+        current_item = 0;
+        trace(`quiz has ${item_count} items`, caller_name='DOMContentLoaded');
+        trace(`first item prompt is ${items[0].prompt}`, caller_name='DOMContentLoaded');
+        trace(`first item choices are ${items[0].choices}`, caller_name='DOMContentLoaded');
+        trace(`correct answer for first item is choice number ${items[0].answer}`, caller_name='DOMContentLoaded');
+
+        updatePrompt();
+        updateChoiceButtons();
+        traceExit('DOMContentLoaded')
+    });
+
+{% endblock %}
+{% block progress_area %}
+    <div class="row">
+        <div class="col-1" align="center" vertical-align="middle">
+            <button type="button" class="btn-close text-reset"></button>
+        </div>
+        <div class="col-10" align="center" vertical-align="middle">
+            <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                <div class="progress-bar progress-bar-striped bg-warning" id="progress-bar" style="width: 0%"></div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block prompt_area %}
+    <div class="row">
+        <div class="col">
+            <p class="lead">
+                Which word below means "<strong><span class="text-primary" id="prompt-word">tbd</span></strong>"?
+            </p>
+        </div>
+    </div>
+{% endblock %}
+{% block response_area %}
+    <div class="d-grid gap-2 col-4 mx-auto">
+        <input type="radio" class="btn-check" name="choices" id="choice-1" autocomplete="off">
+        <label class="btn btn-lg btn-outline-primary" id="choice-text-1" for="choice-1" onclick="choiceClick()">
+            TBD
+        </label>
+        <input type="radio" class="btn-check" name="choices" id="choice-2" autocomplete="off">
+        <label class="btn btn-lg btn-outline-primary" id="choice-text-2" for="choice-2" onclick="choiceClick()">
+            TBD
+        </label>
+        <input type="radio" class="btn-check" name="choices" id="choice-3" autocomplete="off">
+        <label class="btn btn-lg btn-outline-primary" id="choice-text-3" for="choice-3" onclick="choiceClick()">
+            TBD
+        </label>
+        <input type="radio" class="btn-check" name="choices" id="choice-4" autocomplete="off">
+        <label class="btn btn-lg btn-outline-primary" id="choice-text-4" for="choice-4" onclick="choiceClick()">
+            TBD
+        </label>
+        <input type="radio" class="btn-check" name="choices" id="choice-5" autocomplete="off">
+        <label class="btn btn-lg btn-outline-primary" id="choice-text-5" for="choice-5" onclick="choiceClick()">
+            TBD
+        </label>
+    </div>
+{% endblock %}
+{% block feedback_area %}
+    <!-- Alert box colors: white = "alert alert-light"; green = "alert alert-success"; red = "alert alert-danger" -->
+    <!-- Background colors: white=bg-white; green=bg-success; red=bg-danger; -->
+    <div class="container bg-white bg-opacity-10" id="feedback-box">
+        <div class="row">&nbsp;</div> <!-- add some space at the top -->
+        <div class="row">
+            <div class="col-10">
+                <span class="text-start">
+                    <h4 class="text-success" id="feedback-message">&nbsp;</h4>
+                </span>
+            </div>
+            <div class="col">
+                <!-- Button colors: blue = "btn btn-primary"; grey = "btn btn-secondary" -->
+                <button type="button" class="btn btn-secondary disabled" id="continue-btn" onclick="continueClick()">
+                    CHECK
+                </button>
+            </div>
+        </div>
+        <div class="row">&nbsp;</div> <!-- add some space at the bottom -->
+    </div>
+{% endblock %}

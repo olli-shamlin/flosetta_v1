@@ -1,0 +1,49 @@
+{% extends "base_quiz.html" %}
+{% block js_code %}
+    document.addEventListener('DOMContentLoaded', function() {
+        el = document.getElementById('my-string-field')
+        el.setAttribute('value', 'VALUE SET BY BROWSER')
+    });
+{% endblock %}
+{% block progress_area %}
+{% endblock %}
+{% block prompt_area %}
+    <h2>Items</h2>
+    <ol>
+        {% for item in quiz.items %}
+            <li>
+                <ul>
+                    <li><strong>Prompt:</strong> {{ item.prompt }}</li>
+                    <li><strong>Answer:</strong> {{ item.answer }}</li>
+                    <li><strong>Choices:</strong>
+                        <ol>
+                            {% for choice in item.choices %}
+                                <li>{{ choice }}</li>
+                            {% endfor %}
+                        </ol>
+                    </li>
+                </ul>
+            </li>
+        {% endfor %}
+    </ol>
+{% endblock %}
+{% block response_area %}
+    <h2>Responses</h2>
+    <ol>
+        {% for item in quiz.items %}
+            <li>{{ item.choices[(loop.index-1) % 4] }} ->
+                {% if item.choices[(loop.index-1) % 4] == item.answer %}
+                    <span class="text-success">Correct</span>
+                {% else %}
+                    <span class="text-danger">Wrong</span>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ol>
+{% endblock %}
+{% block feedback_area %}
+    {% from 'bootstrap5/form.html' import render_field %}
+    {# the "responses" field input is already hidden; the following line renders the field with it's label hidden as well #}
+    {{ render_field(form.responses, form_type="inline", class="form-control", placeholder='bullshit') }}
+    {{ render_field(form.submit) }}
+{% endblock %}

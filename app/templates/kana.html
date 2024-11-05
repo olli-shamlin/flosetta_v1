@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+{% block content %}
+    <!---------------------------------------------------------->
+    <!-- START of Basic Kana table                            -->
+    <!---------------------------------------------------------->
+    <div class="container">
+        <h2>Basic Kana</h2>
+        <div class="alert alert-primary" role="alert">
+            Hover the mouse cursor over any of the kana characters in this table to see the
+            mnemonic for the character.
+        </div>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>&nbsp;</th>
+                    {% for c in reftabs['Basic'][' '].keys() %}
+                        <th class="fs-5 text-center">{{ c }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for row_label, chars in reftabs['Basic'].items() %}
+                    <tr>
+                        <th class="fs-5 text-center align-middle">{{ row_label }}</th>
+                        {% for col_label, c in chars.items() %}
+                            {% if c is none %}
+                                <td>&nbsp;</td>
+                            {% else %}
+                                <td class="fs-5 text-center align-middle">
+                                    <span class="text" data-bs-toggle="tooltip" title="{{ c.hiragana_mnemonic }}">{{ c.hiragana }}</span>
+                                    /
+                                    <span class="text" data-bs-toggle="tooltip" title="{{ c.katakana_mnemonic }}">{{ c.katakana }}</span>
+                                    {% if (c.romaji != (row_label + col_label).strip()) and (row_label != 'n/m') %}
+                                        <br><span class="fs-6 text-danger fw-bold text-center">{{ c.romaji }}</span>
+                                    {% endif %}
+                                </td>
+                            {% endif %}
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <!---------------------------------------------------------->
+    <!-- END of Basic Kana table                              -->
+    <!---------------------------------------------------------->
+    <!---------------------------------------------------------->
+    <!-- START of Dakuten table                               -->
+    <!---------------------------------------------------------->
+    <div class="container">
+        <h2>Dakuten</h2>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>&nbsp;</th>
+                    {% for c in reftabs['Dakuten']['g'].keys() %}
+                        <th class="fs-5 text-center">{{ c }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for row_label, chars in reftabs['Dakuten'].items() %}
+                    <tr>
+                        <th class="fs-5 text-center align-middle">{{ row_label }}</th>
+                        {% for col_label, c in chars.items() %}
+                            <td class="fs-5 text-center align-middle">
+                                <span class="text">{{ c.hiragana }}</span>
+                                /
+                                <span class="text">{{ c.katakana }}</span>
+                                {% if (c.romaji != (row_label + col_label).strip()) and (row_label != 'n/m') %}
+                                    <br><span class="fs-6 text-danger fw-bold text-center">{{ c.romaji }}</span>
+                                {% endif %}
+                            </td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <!---------------------------------------------------------->
+    <!-- END of Dakuten table                                 -->
+    <!---------------------------------------------------------->
+    <!---------------------------------------------------------->
+    <!-- START of Modified Kana table                         -->
+    <!---------------------------------------------------------->
+    <div class="container">
+        <h2>Modified Kana</h2>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>&nbsp;</th>
+                    {% for c in reftabs['Modified']['ky'].keys() %}
+                        <th class="fs-5 text-center">{{ c }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for row_label, chars in reftabs['Modified'].items() %}
+                    <tr>
+                        <th class="fs-5 text-center align-middle">{{ row_label }}</th>
+                        {% for col_label, c in chars.items() %}
+                            <td class="fs-5 text-center align-middle">
+                                <span class="text">{{ c.hiragana }}</span>
+                                /
+                                <span class="text">{{ c.katakana }}</span>
+                            </td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <!---------------------------------------------------------->
+    <!-- END of Modified Kana table                           -->
+    <!---------------------------------------------------------->
+{% endblock %}

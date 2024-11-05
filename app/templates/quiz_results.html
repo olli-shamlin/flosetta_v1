@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% macro highlighted_cell(value, success) %}
+    {% if success %}
+        <td class="table-success">{{ value }}</td>
+    {% else %}
+        <td class="table-danger">{{ value }}</td>
+    {% endif %}
+{% endmacro %}
+
+{% block content %}
+    <h2>Summary</h2>
+    <ul>
+        <li>Number of items: {{ quiz.items|length }}</li>
+        <li>Number correct: {{ quiz.correct }}</li>
+        <li>Number incorrect: {{ quiz.incorrect }}</li>
+        <li>Percent correct: {{ ((quiz.correct / quiz.items|length) * 100)|round(0, 'common')|int }}%</li>
+    </ul>
+    <h2>Items</h2>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Prompt</th>
+                <th>Choices</th>
+                <th>Answer</th>
+                <th>Response</th>
+            </tr>
+        </thead>
+            {% for item in quiz.items %}
+                <tr>
+                    <td>{{ item.prompt }}</td>
+                    <td>{{ item.choices|join(', ') }}</td>
+                    {{ highlighted_cell(item.answer, item.answer == item.response) }}
+                    {{ highlighted_cell(item.response, item.answer == item.response) }}
+                </tr>
+            {% endfor %}
+        <tbody>
+
+        </tbody>
+    </table>
+{% endblock %}

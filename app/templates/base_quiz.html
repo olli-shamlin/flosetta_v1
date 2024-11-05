@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block content %}
+    <!--==============================================================-->
+    <!-- START js_code block                                          -->
+    <!--==============================================================-->
+    <script src="static/tracing.js"></script>
+    <script>
+        {% block js_code %}
+        {% endblock %}
+    </script>
+    <!--== END js_code block =========================================-->
+    <!--==============================================================-->
+    <!-- START progress_area block                                    -->
+    <!--==============================================================-->
+    <div class="row">
+        <div class="col-1" align="center" vertical-align="middle">
+            <button type="button" class="btn-close text-reset"></button>
+        </div>
+        <div class="col-10" align="center" vertical-align="middle">
+            <div class="progress" role="progressbar" aria-label="Basic example"
+                 aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                <div class="progress-bar progress-bar-striped bg-warning" id="progress-bar" style="width: 0%"></div>
+            </div>
+        </div>
+    </div>
+    <!--== END progress_area block ===================================-->
+    <!--==============================================================-->
+    <!-- START prompt_area block                                      -->
+    <!--==============================================================-->
+    <div class="container pb-3" id="prompt-area">
+        {% block prompt_area %}
+        {% endblock %}
+    </div>
+    <!--== END prompt_area block =====================================-->
+    <!--==============================================================-->
+    <!-- START response_area block                                    -->
+    <!--==============================================================-->
+    <div class="container pb-3" id="response-area">
+        {% block response_area %}
+        {% endblock %}
+    </div>
+    <!--== END response_area block ===================================-->
+    <!--==============================================================-->
+    <!-- START feedback_area block                                    -->
+    <!--==============================================================-->
+    <div class="container pb-3" id="feedback-area">
+        {% block feedback_area %}
+        {% endblock %}
+    </div>
+    <!--== END feedback_area block ===================================-->
+{% endblock %}

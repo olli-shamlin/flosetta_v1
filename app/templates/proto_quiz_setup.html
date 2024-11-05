@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Sign In</h1>
+    <form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+        <table>
+        {% for subfield in form.using_data %}
+            <tr>
+                <td>{{ subfield }}</td><td>{{ subfield.label }}</td>
+            </tr>
+        {% endfor %}
+        </table>
+        <!-------------------------------------------------
+        <div class="row g-2 p-3 align-items-center">
+            <div class="col-auto">
+                {{ form.username.label(class='form-label') }}
+            </div>
+            <div class="col-auto text-end">
+                {{ form.username(class='form-control') }}
+            </div>
+        </div>
+        <div class="row g-2 p-3 align-items-center">
+            <div class="col-auto">
+                {{ form.password.label(class='form-label') }}
+            </div>
+            <div class="col-auto text-end">
+                {{ form.password(class='form-control') }}
+            </div>
+        </div>
+        <div class="row g-2 p-3 align-items-center">
+            <div class="col-auto">
+                {{ form.remember_me(class='form-check-input') }}
+            </div>
+            <div class="col-auto">
+                {{ form.remember_me.label(class='form-label') }}
+            </div>
+        </div>
+        --------------------------------------------------->
+        <div class="row g-2 p-3 align-items-center">
+            <div class="col-auto">{{ form.submit(class='btn btn-primary') }}</div>
+        </div>
+    </form>
+{% endblock %}

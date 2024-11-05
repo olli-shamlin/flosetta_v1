@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    {% from 'bootstrap5/form.html' import render_field %}
+    {{ render_field(form.datasource) }}
+    <div class="mb-3 "><label class="form-label" for="datasource">Which data set do you want to be quizzed on?</label>
+        <div class="form-check">
+            <input class="btn-check" id="datasource-0" name="datasource" type="radio" value="vocab" autocomplete="off" checked>
+            <label class="btn" for="datasource-0">Vocabulary</label>
+        </div>
+        <div class="form-check">
+            <input class="btn-check" id="datasource-1" name="datasource" type="radio" value="kana" autocomplete="off">
+            <label class="btn" for="datasource-1">Kana</label>
+        </div>
+    </div>
+    {{ render_field(form.type) }}
+    {{ render_field(form.num_prompts) }}
+    {{ render_field(form.vocab_prompt_type) }}
+    {{ render_field(form.kana_prompt_type) }}
+    {{ render_field(form.vocab_response_type) }}
+    {{ render_field(form.kana_response_type) }}
+    {{ render_field(form.vocab_pos_filter) }}
+    {{ render_field(form.kana_filter) }}
+    {{ render_field(form.submit) }}
+
+{% endblock %}
