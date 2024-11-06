@@ -96,9 +96,5 @@ def quiz_results():
 
 @app.route('/proto', methods=['GET', 'POST'])
 def proto():
-    quiz = MultipleChoiceQuiz(10)
-    form = MultipleChoiceQuizForm()
-    if form.validate_on_submit():
-        return redirect('/index')
-    return render_template('quiz_multiple_choice.html', quiz=quiz, form=form,
-                           title='Multiple Choice Quiz', emoji=resolve_icon('question'))
+    return render_template('proto_quiz_setup_2.html',
+                           title='Quiz Options', emoji=resolve_icon('question'))

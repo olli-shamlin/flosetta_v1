@@ -74,7 +74,13 @@ are
 4. Have the html page post quiz responses back to the
    app when a submit button is clicked
 
-## Git commands
+## Nov 5 2024
+
+Got a complete multiple choice quiz flow working with mocked up data.
+Decided to move project to github today.  Currently in the process of
+setting up the virtual environment of the new project.
+
+### Git commands
 
 - clone from github
   - git clone https://github.com/olli-shamlin/flosetta.git
@@ -85,3 +91,51 @@ are
   - UNDO
     - PREFERRED: git revert
     - RISKY: git reset
+
+### Installed python packages
+
+- Flask
+- WTForms
+- wtforms-bootstrap5 (didn't do it)
+- bootstrap-flask (didn't do it)
+- flask-boostrap5 (didn't do it)
+- flask-bootstrap 
+  - didn't work but changed the error!
+- uninstalled flask-bootstrap
+- uninstalled bootstrap-flask
+- boostrap-flask (installed again)
+- wtforms-bootstrap5 (installed again)
+- numbers-parser
+- flask-wtf
+
+...AND WE'RE UP AND RUNNING!
+
+#### Final "pip freeze" output
+
+    blinker==1.8.2
+    Bootstrap-Flask==2.4.1
+    click==8.1.7
+    compact-json==1.8.1
+    cramjam==2.9.0
+    dominate==2.9.1
+    enum-tools==0.12.0
+    Flask==3.0.3
+    Flask-WTF==1.2.2
+    importlib_resources==6.4.5
+    itsdangerous==2.2.0
+    Jinja2==3.1.4
+    MarkupSafe==3.0.2
+    numbers-parser==4.14.1
+    protobuf==5.28.3
+    Pygments==2.18.0
+    python-dateutil==2.9.0.post0
+    python-snappy==0.7.3
+    sigfig==1.3.18
+    six==1.16.0
+    sortedcontainers==2.4.0
+    typing_extensions==4.12.2
+    visitor==0.1.3
+    wcwidth==0.2.13
+    Werkzeug==3.1.2
+    WTForms==3.2.1
+    wtforms-bootstrap5==0.3.0

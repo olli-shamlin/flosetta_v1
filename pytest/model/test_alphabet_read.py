@@ -34,37 +34,40 @@ def test_alphabet_read():
     assert characters[13].statistics.consecutive_correct == 0
     assert characters[13].statistics.consecutive_incorrect == 0
 
-    assert characters[25].category == 'Modified YA'
-    assert characters[25].romaji == 'cha'
-    assert characters[25].hiragana == 'ちゃ'
-    assert characters[25].katakana == 'チャ'
-    assert characters[25].hiragana_mnemonic is None
-    assert characters[25].katakana_mnemonic is None
-    assert characters[25].statistics.quizzed == 0
-    assert characters[25].statistics.correct == 0
-    assert characters[25].statistics.consecutive_correct == 0
-    assert characters[25].statistics.consecutive_incorrect == 0
+    i = 96
+    assert characters[i].category == 'Modified YA'
+    assert characters[i].romaji == 'cha'
+    assert characters[i].hiragana == 'ちゃ'
+    assert characters[i].katakana == 'チャ'
+    assert characters[i].hiragana_mnemonic is None
+    assert characters[i].katakana_mnemonic is None
+    assert characters[i].statistics.quizzed == 0
+    assert characters[i].statistics.correct == 0
+    assert characters[i].statistics.consecutive_correct == 0
+    assert characters[i].statistics.consecutive_incorrect == 0
 
-    assert characters[36].category == 'Dakuten'
-    assert characters[36].romaji == 'ga'
-    assert characters[36].hiragana == 'が'
-    assert characters[36].katakana == 'ガ'
-    assert characters[36].hiragana_mnemonic is None
-    assert characters[36].katakana_mnemonic is None
-    assert characters[36].statistics.quizzed == 0
-    assert characters[36].statistics.correct == 0
-    assert characters[36].statistics.consecutive_correct == 0
-    assert characters[36].statistics.consecutive_incorrect == 0
+    i = 70
+    assert characters[i].category == 'Dakuten'
+    assert characters[i].romaji == 'ga'
+    assert characters[i].hiragana == 'が'
+    assert characters[i].katakana == 'ガ'
+    assert characters[i].hiragana_mnemonic is None
+    assert characters[i].katakana_mnemonic is None
+    assert characters[i].statistics.quizzed == 0
+    assert characters[i].statistics.correct == 0
+    assert characters[i].statistics.consecutive_correct == 0
+    assert characters[i].statistics.consecutive_incorrect == 0
 
-    assert characters[67].category == 'Basic'
-    assert characters[67].romaji == 'ki'
-    assert characters[67].hiragana == 'き'
-    assert characters[67].katakana == 'キ'
-    assert characters[67].hiragana_mnemonic == 'The key is to keep thinking. This symbol looks like a key.'
-    assert characters[67].katakana_mnemonic == 'The key is to keep thinking. This looks like a key.'
-    assert characters[67].statistics.quizzed == 0
-    assert characters[67].statistics.correct == 0
-    assert characters[67].statistics.consecutive_correct == 0
-    assert characters[67].statistics.consecutive_incorrect == 0
+    i = 30
+    assert characters[i].category == 'Basic'
+    assert characters[i].romaji == 'ki'
+    assert characters[i].hiragana == 'き'
+    assert characters[i].katakana == 'キ'
+    assert characters[i].hiragana_mnemonic == 'The key is to keep thinking. This symbol looks like a key.'
+    assert characters[i].katakana_mnemonic == 'The key is to keep thinking. This looks like a key.'
+    assert characters[i].statistics.quizzed == 0
+    assert characters[i].statistics.correct == 0
+    assert characters[i].statistics.consecutive_correct == 0
+    assert characters[i].statistics.consecutive_incorrect == 0
 
     return

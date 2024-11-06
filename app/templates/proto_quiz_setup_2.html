@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="m-0 border-0">
+        <h3>What would you like to be quizzed on?</h3>
+        <div class="row">
+            <div class="col-1"></div>
+            <div class="col">
+                <input type="radio" class="btn-check" name="table" id="table1" autocomplete="off">
+                <label class="btn btn-lg btn-primary" for="table1">Vocabulary</label>
+                <input type="radio" class="btn-check" name="table" id="table2" autocomplete="off">
+                <label class="btn btn-lg btn-primary" for="table2">Kana</label>
+            </div>
+        </div>
+    </div>
+    <div class="m-0 border-0">
+        <h3>How many questions do you want the quiz to have?</h3>
+        <div class="row">
+            <div class="col-1"></div>
+            <div class="col">
+                <input type="radio" class="btn-check" name="table" id="itmcnt1" autocomplete="off">
+                <label class="btn btn-lg btn-primary" for="itmcnt1">5</label>
+                <input type="radio" class="btn-check" name="table" id="itmcnt2" autocomplete="off">
+                <label class="btn btn-lg btn-primary" for="itmcnt2">10</label>
+                <input type="radio" class="btn-check" name="table" id="itmcnt3" autocomplete="off">
+                <label class="btn btn-lg btn-primary" for="itmcnt3">15</label>
+                <input type="radio" class="btn-check" name="table" id="itmcnt4" autocomplete="off">
+                <label class="btn btn-lg btn-primary" for="itmcnt4">20</label>
+            </div>
+        </div>
+    </div>
+{% endblock %}

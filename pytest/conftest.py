@@ -27,6 +27,7 @@ def pytest_collection_modifyitems(session, config, items):
         'test_vocabulary_update',
         'test_alphabet_update',
         'test_model_update',
+        'test_mcq_1',
     ]
 
     function_mapping = {item.name: item for item in items}
