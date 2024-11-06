@@ -183,6 +183,8 @@ class MultipleChoiceQuiz(Quiz):
     def __init__(self, params: QuizParameters):
 
         super().__init__()
+        self._results: Optional[list[str]] = None
+
         m = Model()
 
         if params.table == 'Vocabulary':

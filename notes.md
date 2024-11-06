@@ -139,3 +139,47 @@ setting up the virtual environment of the new project.
     Werkzeug==3.1.2
     WTForms==3.2.1
     wtforms-bootstrap5==0.3.0
+
+## Nov 6 2024
+
+- Got "refreshed" project into github and running locally
+- Reasonably working drafts of QuizParamters and 
+  MultipleChoiceQuiz written
+- Next object is to "wire" those into system to show end-to-end flow from quiz set up pages
+  to quiz summary page AND stats saved to dbms
+
+### Quiz Setup flow needed for above objective
+
+1. prompt> choose TABLE:
+  - vocabulary
+  - kana 
+2. prompt> choose QUIZ TYPE:
+  1. if TABLE is vocabulary
+    - multiple choice
+    - match
+  2. if TABLE is kana
+    - multiple choice
+    - match
+    - jiqsaw
+    - memory
+  3. if QUIZ TYPE in [multiple choice, match]
+    1. prompt> NUMBER OF ITEMS
+      - 5
+      - 10
+      - 15
+      - 20
+    2. prompt> PROMPT TYPE
+      3. if TABLE is vocabulary
+        - english
+        - kana
+        - kanji
+      4. if TABLE is kana
+        - romaji
+        - hiragana
+        - katakana
+    3. prompt> CHOICE TYPE
+      - if TABLE is vocabulary
+        - same list as above *except* PROMPT TYPE
+      - if TABLE is kana
+        - same list as above *except* PROMPT TYPE
+  

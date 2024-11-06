@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <span class="lead">
+        You chose...
+        <ul>
+            <li><strong>Data from:</strong> {{ quiz_params.table }}</li>
+            <li><strong>Quiz type:</strong> {{ quiz_params.type_of_quiz }}</li>
+            <li><strong>Item count</strong>: {{ quiz_params.number_of_items }}</li>
+            <li><strong>Prompt type:</strong> {{ quiz_params.prompt_type }}</li>
+            <li><strong>Choices type:</strong> {{ quiz_params.choice_type }}</li>
+        </ul>
+    </span>
+
+    {% from 'bootstrap5/form.html' import render_form %}
+    {{ render_form(form) }}
+
+{% endblock %}
