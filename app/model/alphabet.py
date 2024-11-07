@@ -71,17 +71,18 @@ class Character:
 
 class Alphabet:
 
+    _characters: Optional[list[Character]] = None
+
     def __init__(self):
-        self._characters: Optional[list[Character]] = None
         return
 
     @property
     def characters(self) -> list[Character]:
 
-        if self._characters is None:
+        if Alphabet._characters is None:
             rows = fetch_kana()
 
-            self._characters: list[Character] = []
+            Alphabet._characters: list[Character] = []
 
             for row in rows:
                 character = Character(kana_id=row[0], category=row[6], english=row[1],
@@ -89,9 +90,9 @@ class Alphabet:
                                       katakana=row[4],katakana_mnemonic=row[5],
                                       stat_quizzed=row[7], stat_correct=row[8],
                                       stat_consecutive_correct=row[9], stat_consecutive_wrong=row[10])
-                self._characters.append(character)
+                Alphabet._characters.append(character)
 
-        return self._characters
+        return Alphabet._characters
 
     @property
     def categories(self) -> list[str]:

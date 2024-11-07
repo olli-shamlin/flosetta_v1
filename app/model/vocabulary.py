@@ -77,17 +77,18 @@ class Word:
 
 class Vocabulary:
 
+    _words: Optional[list[Word]] = None
+
     def __init__(self):
-        self._words: Optional[list[Word]] = None
         return
 
     @property
     def words(self) -> list[Word]:
 
-        if self._words is None:
+        if Vocabulary._words is None:
             rows = fetch_vocab()
 
-            self._words: list[Word] = []
+            Vocabulary._words: list[Word] = []
 
             for row in rows:
                 try:
@@ -95,11 +96,11 @@ class Vocabulary:
                                 part_of_speech=row[5], note=row[6],tags=row[7],
                                 stat_quizzed=row[8], stat_correct=row[9],
                                 stat_consecutive_correct=row[10], stat_consecutive_wrong=row[11])
-                    self._words.append(word)
+                    Vocabulary._words.append(word)
                 except IndexError as e:
                     pass
 
-        return self._words
+        return Vocabulary._words
 
     @property
     def parts_of_speech(self) -> list[str]:
