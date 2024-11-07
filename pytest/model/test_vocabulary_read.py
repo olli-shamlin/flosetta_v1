@@ -9,7 +9,7 @@ def test_words_read(expected_vocab_rows):
     # TODO REFACTOR
     # The following code is also in test_model_read.py; it would be good to extract it into it's own function
     # that can be shared between tests
-    assert len(words) == 10
+    assert len(words) == 100
 
     for i, word in enumerate(words):
         assert word.english == expected_vocab_rows[i][0]

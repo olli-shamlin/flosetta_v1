@@ -147,6 +147,9 @@ setting up the virtual environment of the new project.
   MultipleChoiceQuiz written
 - Next object is to "wire" those into system to show end-to-end flow from quiz set up pages
   to quiz summary page AND stats saved to dbms
+- Today
+  - Got quiz flow from setup through results summary working
+    for multiple choice quiz with vocab and kana!
 
 ### Quiz Setup flow needed for above objective
 
@@ -183,3 +186,12 @@ setting up the virtual environment of the new project.
       - if TABLE is kana
         - same list as above *except* PROMPT TYPE
   
+## Nov 7 2024
+
+- Today I want to focus on cleaning up some issues with the model 
+  class:
+  - current code is not memoizing correctly
+  - current code requires three levels to get to words and characters
+    (eg, Model().vocabulary.words and Model().alphabet.characters;
+    instead I want Model().vocabulary and Model().alphabet)
+- Today I also want to explore using github's issue tracking facilities

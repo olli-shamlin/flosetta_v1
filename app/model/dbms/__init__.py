@@ -72,7 +72,7 @@ def _insert_test_vocab_rows(csr: Cursor):
     stat_vals = [0, 0, 0, 0]
 
     rows = list()
-    for i in range(1, 11):
+    for i in range(1, 101):
         note = f'W{i} note' if i % 2 else _SQL_NULL
         num_tags = i % 4
         tags = '; '.join([f'W{i}T{j}' for j in range(1, num_tags+1)]) if num_tags else _SQL_NULL

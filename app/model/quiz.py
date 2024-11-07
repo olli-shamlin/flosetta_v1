@@ -5,6 +5,8 @@ from itertools import islice
 from random import sample
 from typing import Optional
 from app.model import Model
+from app.model.alphabet import Character
+from app.model.vocabulary import Word
 from app.utils.exceptions import ResultsNotSet
 
 
@@ -134,10 +136,6 @@ class MultipleChoiceItem(QuizItem):
         self._response: Optional[str] = None
 
     @property
-    def prompt(self) -> str:
-        return self._prompt
-
-    @property
     def answer(self) -> str:
         return self._answer
 
@@ -245,7 +243,7 @@ class MultipleChoiceQuiz(Quiz):
     def items(self) -> list[MultipleChoiceItem]:
         return self._items
 
-    def add_results(self, results: list[str]):
+    def add_results(self, results: list[str]) -> None:
         assert self._results is None
         assert len(results) == len(self._items)
         for i, item in enumerate(self._items):

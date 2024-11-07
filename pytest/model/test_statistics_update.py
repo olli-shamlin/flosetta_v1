@@ -90,18 +90,8 @@ def test_vocabulary_update():
     assert m.is_dirty is False
 
     columns = 'quizzed, correct, consecutive_correct, consecutive_wrong'
-    answers: list[list[int]] = [
-        [11, 11, 11, 0],  # the first word's stats are 11 due to previous test function
-        [2, 2, 2, 0],
-        [3, 3, 3, 0],
-        [4, 4, 4, 0],
-        [5, 5, 5, 0],
-        [6, 6, 6, 0],
-        [7, 7, 7, 0],
-        [8, 8, 8, 0],
-        [9, 9, 9, 0],
-        [10, 10, 10, 0],
-    ]
+    answers = [[11, 11, 11, 0]] + [[i, i, i, 0] for i in range(2, 101)]
+
     with sqlite3.connect(files.test_database.full_path) as conn:
         with closing(conn.cursor()) as crs:
             for i, word in enumerate(m.vocabulary.words):
