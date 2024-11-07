@@ -47,7 +47,7 @@ def test_update_word():
 
     m = Model()
 
-    for word in m.vocabulary.words:
+    for word in m.vocabulary:
         for _ in range(_NUM_UPDATES):
             word.statistics.increment(correct=(True if word.id < 51 else False))
         word.update()
@@ -56,7 +56,7 @@ def test_update_word():
 
     with sqlite3.connect(files.test_database.full_path) as conn:
         with closing(conn.cursor()) as crs:
-            for word in m.vocabulary.words:
+            for word in m.vocabulary:
                 crs.execute(f'SELECT {columns} FROM vocab WHERE _ROWID_ = {word.id}')
                 rows = crs.fetchall()
 
@@ -83,7 +83,7 @@ def test_vocabulary_update():
     assert m.syllabary.is_dirty is False
     assert m.is_dirty is False
 
-    for w in m.vocabulary.words:
+    for w in m.vocabulary:
         for _ in range(_NUM_UPDATES):
             w.statistics.increment(correct=(True if w.id < 51 else False))
 
@@ -101,7 +101,7 @@ def test_vocabulary_update():
 
     with sqlite3.connect(files.test_database.full_path) as conn:
         with closing(conn.cursor()) as crs:
-            for i, word in enumerate(m.vocabulary.words):
+            for i, word in enumerate(m.vocabulary):
                 # TODO remove redundant with conn/with crs statements below
                 with sqlite3.connect(files.test_database.full_path) as conn:
                     with closing(conn.cursor()) as crs:
@@ -175,7 +175,7 @@ def test_model_update():
     assert m.syllabary.is_dirty is False
     assert m.is_dirty is False
 
-    for w in m.vocabulary.words:
+    for w in m.vocabulary:
         for _ in range(_NUM_UPDATES):
             w.statistics.increment(correct=(True if w.id < 51 else False))
 
@@ -197,7 +197,7 @@ def test_model_update():
     with sqlite3.connect(files.test_database.full_path) as conn:
         with closing(conn.cursor()) as crs:
 
-            for word in m.vocabulary.words:
+            for word in m.vocabulary:
 
                 crs.execute(f'SELECT {columns} FROM vocab WHERE _ROWID_ = {word.id}')
                 rows = crs.fetchall()

@@ -1,6 +1,7 @@
 
 from app.model.statistic import Statistic
 from app.model.dbms import fetch_vocab, fetch_parts_of_speech, fetch_word_tags, update_row
+from collections import UserList
 from typing import Optional
 from app.utils import debug_msg
 
@@ -75,32 +76,26 @@ class Word:
         return
 
 
-class Vocabulary:
+class Vocabulary(UserList):
 
     _words: Optional[list[Word]] = None
 
     def __init__(self):
-        return
-
-    @property
-    def words(self) -> list[Word]:
 
         if Vocabulary._words is None:
-            rows = fetch_vocab()
 
-            Vocabulary._words: list[Word] = []
+            rows = fetch_vocab()
+            Vocabulary._words = []
 
             for row in rows:
-                try:
-                    word = Word(word_id=row[0], english=row[1], romaji=row[2], kana=row[3], kanji=row[4],
-                                part_of_speech=row[5], note=row[6],tags=row[7],
-                                stat_quizzed=row[8], stat_correct=row[9],
-                                stat_consecutive_correct=row[10], stat_consecutive_wrong=row[11])
-                    Vocabulary._words.append(word)
-                except IndexError as e:
-                    pass
+                word = Word(word_id=row[0], english=row[1], romaji=row[2], kana=row[3], kanji=row[4],
+                            part_of_speech=row[5], note=row[6],tags=row[7],
+                            stat_quizzed=row[8], stat_correct=row[9],
+                            stat_consecutive_correct=row[10], stat_consecutive_wrong=row[11])
+                Vocabulary._words.append(word)
 
-        return Vocabulary._words
+        super().__init__(Vocabulary._words)
+        return
 
     @property
     def parts_of_speech(self) -> list[str]:
@@ -120,17 +115,18 @@ class Vocabulary:
 
     @property
     def is_dirty(self) -> bool:
-        return any([w.is_dirty for w in self.words])
+        return any([w.is_dirty for w in self.data])
 
     def save(self) -> None:
 
         n = 0
         debug_msg('saving vocabulary')
 
-        for word in self.words:
+        for word in self.data:
             if word.is_dirty:
                 word.update()
                 n += 1
 
         debug_msg(f'done saving vocabulary; {n} characters updated')
+
         return

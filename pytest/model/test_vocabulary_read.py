@@ -4,14 +4,14 @@ from app.model.vocabulary import Vocabulary
 
 def test_words_read(expected_vocab_rows):
 
-    words = Vocabulary().words
+    vocabulary = Vocabulary()
 
     # TODO REFACTOR
     # The following code is also in test_model_read.py; it would be good to extract it into it's own function
     # that can be shared between tests
-    assert len(words) == 100
+    assert len(vocabulary) == 100
 
-    for i, word in enumerate(words):
+    for i, word in enumerate(vocabulary):
         assert word.english == expected_vocab_rows[i][0]
         assert word.romaji == expected_vocab_rows[i][1]
         assert word.kana == expected_vocab_rows[i][2]

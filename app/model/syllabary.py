@@ -101,6 +101,7 @@ class Syllabary(UserList):
         return any([c.is_dirty for c in self.data])
 
     def save(self) -> None:
+
         n = 0
         debug_msg('saving alphabet')
 
@@ -110,4 +111,5 @@ class Syllabary(UserList):
                 n += 1
 
         debug_msg(f'done saving alphabet; {n} characters updated')
+
         return

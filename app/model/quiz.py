@@ -190,9 +190,9 @@ class MultipleChoiceQuiz(Quiz):
         m = Model()
 
         if params.table == 'Vocabulary':
-            prompt_words = sample(m.vocabulary.words, params.number_of_items)
+            prompt_words = sample(m.vocabulary, params.number_of_items)
             prompt_word_ids = [w.id for w in prompt_words]
-            other_words = [w for w in m.vocabulary.words if w.id not in prompt_word_ids]
+            other_words = [w for w in m.vocabulary if w.id not in prompt_word_ids]
             alt_choice_words = sample(other_words, (params.number_of_items * 4))
             alt_choice_words = _chunk_list(alt_choice_words, 4)
         else:

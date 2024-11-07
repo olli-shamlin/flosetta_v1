@@ -4,7 +4,7 @@ from app.model import Model
 
 def test_model_vocabulary_read(expected_vocab_rows):
 
-    words = Model().vocabulary.words
+    words = Model().vocabulary
 
     # TODO REFACTOR
     # The following code is also in test_vocabulary_read.py; it would be good to extract it into it's own function

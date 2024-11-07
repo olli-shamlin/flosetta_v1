@@ -40,7 +40,7 @@ _BATON = _PassTheBaton()
 @app.route('/vocab')
 def index():
     return render_template('vocabulary.html',
-                           words=Model().vocabulary.words,
+                           words=Model().vocabulary,
                            title='Vocabulary',
                            emoji=resolve_icon('backpack'))
 
