@@ -136,6 +136,10 @@ class MultipleChoiceItem(QuizItem):
         self._response: Optional[str] = None
 
     @property
+    def prompt(self) -> str:
+        return self._prompt
+
+    @property
     def answer(self) -> str:
         return self._answer
 
@@ -193,9 +197,9 @@ class MultipleChoiceQuiz(Quiz):
             alt_choice_words = _chunk_list(alt_choice_words, 4)
         else:
             assert params.table == 'Kana'
-            prompt_words = sample(m.alphabet.characters, params.number_of_items)
+            prompt_words = sample(m.syllabary, params.number_of_items)
             prompt_word_ids = [w.id for w in prompt_words]
-            other_words = [w for w in m.alphabet.characters if w.id not in prompt_word_ids]
+            other_words = [w for w in m.syllabary if w.id not in prompt_word_ids]
             alt_choice_words = sample(other_words, (params.number_of_items * 4))
             alt_choice_words = _chunk_list(alt_choice_words, 4)
 

@@ -4,8 +4,7 @@ from app.model import Model
 
 def kana_reference_tables():
 
-    characters = Model().alphabet.characters
-    m = {c.romaji: c for c in characters}
+    m = {c.romaji: c for c in Model().syllabary}
 
     tables = {
         'Basic': {

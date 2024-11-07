@@ -1,18 +1,16 @@
 
 from app.model.vocabulary import Vocabulary
-from app.model.alphabet import Alphabet
+from app.model.alphabet import Syllabary
 from typing import Optional
 
 
 class Model:
 
-    # TODO REFACTOR
-    # Change _vocabulary and _alphabet from instance properties to class properties so that
-    # the database tables are only loaded once per app session instead of everytime a Model instance is created.
+    _syllabary: Optional[Syllabary] = None
 
     def __init__(self):
         self._vocabulary: Optional[list[Vocabulary]] = None
-        self._alphabet: Optional[Alphabet] = None
+        # self._alphabet: Optional[Alphabet] = None
         return
 
     @property
@@ -22,19 +20,19 @@ class Model:
         return self._vocabulary
 
     @property
-    def alphabet(self) -> Alphabet:
-        if self._alphabet is None:
-            self._alphabet = Alphabet()
-        return self._alphabet
+    def syllabary(self) -> Syllabary:
+        if Model._syllabary is None:
+            Model._syllabary = Syllabary()
+        return Model._syllabary
 
     @property
     def is_dirty(self) -> bool:
-        return self.alphabet.is_dirty or self.vocabulary.is_dirty
+        return self.syllabary.is_dirty or self.vocabulary.is_dirty
 
     def save(self) -> None:
 
-        if self.alphabet.is_dirty:
-            self.alphabet.save()
+        if self.syllabary.is_dirty:
+            self.syllabary.save()
         if self.vocabulary.is_dirty:
             self.vocabulary.save()
 

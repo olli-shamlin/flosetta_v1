@@ -1,8 +1,9 @@
 
 from app.model.statistic import Statistic
-from typing import Optional
 from app.model.dbms import fetch_kana, update_row, fetch_kana_categories
 from app.utils import debug_msg
+from collections import UserList
+from typing import Optional
 
 
 class Character:
@@ -69,20 +70,16 @@ class Character:
         return
 
 
-class Alphabet:
+class Syllabary(UserList):
 
     _characters: Optional[list[Character]] = None
 
     def __init__(self):
-        return
 
-    @property
-    def characters(self) -> list[Character]:
+        if Syllabary._characters is None:
 
-        if Alphabet._characters is None:
             rows = fetch_kana()
-
-            Alphabet._characters: list[Character] = []
+            Syllabary._characters = []
 
             for row in rows:
                 character = Character(kana_id=row[0], category=row[6], english=row[1],
@@ -90,26 +87,24 @@ class Alphabet:
                                       katakana=row[4],katakana_mnemonic=row[5],
                                       stat_quizzed=row[7], stat_correct=row[8],
                                       stat_consecutive_correct=row[9], stat_consecutive_wrong=row[10])
-                Alphabet._characters.append(character)
+                Syllabary._characters.append(character)
 
-        return Alphabet._characters
+        super().__init__(Syllabary._characters)
+        return
 
     @property
     def categories(self) -> list[str]:
-        rows = fetch_kana_categories()
-        parts_of_speech = [r[0] for r in rows]
-        return parts_of_speech
+        raise NotImplementedError('alphabet.py/Syllabary.categories')
 
     @property
     def is_dirty(self) -> bool:
-        return any([c.is_dirty for c in self.characters])
+        return any([c.is_dirty for c in self.data])
 
     def save(self) -> None:
-
         n = 0
         debug_msg('saving alphabet')
 
-        for character in self.characters:
+        for character in self.data:
             if character.is_dirty:
                 character.update()
                 n += 1

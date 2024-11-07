@@ -15,7 +15,7 @@ def test_update_character():
 
     m = Model()
 
-    for character in m.alphabet.characters:
+    for character in m.syllabary:
         for _ in range(_NUM_UPDATES):
             character.statistics.increment(correct=(True if character.id < 51 else False))
         character.update()
@@ -24,7 +24,7 @@ def test_update_character():
 
     with sqlite3.connect(files.test_database.full_path) as conn:
         with closing(conn.cursor()) as crs:
-            for character in m.alphabet.characters:
+            for character in m.syllabary:
                 crs.execute(f'SELECT {columns} FROM kana WHERE _ROWID_ = {character.id}')
                 rows = crs.fetchall()
 
@@ -80,7 +80,7 @@ def test_vocabulary_update():
     m = Model()
 
     assert m.vocabulary.is_dirty is False
-    assert m.alphabet.is_dirty is False
+    assert m.syllabary.is_dirty is False
     assert m.is_dirty is False
 
     for w in m.vocabulary.words:
@@ -88,13 +88,13 @@ def test_vocabulary_update():
             w.statistics.increment(correct=(True if w.id < 51 else False))
 
     assert m.vocabulary.is_dirty is True
-    assert m.alphabet.is_dirty is False
+    assert m.syllabary.is_dirty is False
     assert m.is_dirty is True
 
     m.vocabulary.save()
 
     assert m.vocabulary.is_dirty is False
-    assert m.alphabet.is_dirty is False
+    assert m.syllabary.is_dirty is False
     assert m.is_dirty is False
 
     columns = 'quizzed, correct, consecutive_correct, consecutive_wrong'
@@ -128,30 +128,30 @@ def test_alphabet_update():
     m = Model()
 
     assert m.vocabulary.is_dirty is False
-    assert m.alphabet.is_dirty is False
+    assert m.syllabary.is_dirty is False
     assert m.is_dirty is False
 
-    for character in m.alphabet.characters:
+    for character in m.syllabary:
         for _ in range(_NUM_UPDATES):
             character.statistics.increment(correct=(True if character.id < 51 else False))
 
     assert m.vocabulary.is_dirty is False
-    assert m.alphabet.is_dirty is True
+    assert m.syllabary.is_dirty is True
     assert m.is_dirty is True
 
-    m.alphabet.save()
+    m.syllabary.save()
 
     assert m.vocabulary.is_dirty is False
-    assert m.alphabet.is_dirty is False
+    assert m.syllabary.is_dirty is False
     assert m.is_dirty is False
 
     columns = 'quizzed, correct, consecutive_correct, consecutive_wrong'
     ea = _NUM_UPDATES * 2
-    answers = [([ea, ea, ea, 0] if c.id < 51 else [ea, 0, 0, ea]) for c in m.alphabet.characters]
+    answers = [([ea, ea, ea, 0] if c.id < 51 else [ea, 0, 0, ea]) for c in m.syllabary]
 
     with sqlite3.connect(files.test_database.full_path) as conn:
         with closing(conn.cursor()) as crs:
-            for i, character in enumerate(m.alphabet.characters):
+            for i, character in enumerate(m.syllabary):
                 # TODO remove redundant with conn/with crs statements below
                 with sqlite3.connect(files.test_database.full_path) as conn:
                     with closing(conn.cursor()) as crs:
@@ -172,25 +172,25 @@ def test_model_update():
     m = Model()
 
     assert m.vocabulary.is_dirty is False
-    assert m.alphabet.is_dirty is False
+    assert m.syllabary.is_dirty is False
     assert m.is_dirty is False
 
     for w in m.vocabulary.words:
         for _ in range(_NUM_UPDATES):
             w.statistics.increment(correct=(True if w.id < 51 else False))
 
-    for c in m.alphabet.characters:
+    for c in m.syllabary:
         for _ in range(_NUM_UPDATES):
             c.statistics.increment(correct=(True if c.id < 51 else False))
 
     assert m.vocabulary.is_dirty is True
-    assert m.alphabet.is_dirty is True
+    assert m.syllabary.is_dirty is True
     assert m.is_dirty is True
 
     m.save()
 
     assert m.vocabulary.is_dirty is False
-    assert m.alphabet.is_dirty is False
+    assert m.syllabary.is_dirty is False
     assert m.is_dirty is False
 
     columns = 'quizzed, correct, consecutive_correct, consecutive_wrong'
@@ -214,7 +214,7 @@ def test_model_update():
                     assert rows[0][2] == 0
                     assert rows[0][3] == _NUM_UPDATES * 3
 
-            for character in m.alphabet.characters:
+            for character in m.syllabary:
 
                 crs.execute(f'SELECT {columns} FROM kana WHERE _ROWID_ = {character.id}')
                 rows = crs.fetchall()
