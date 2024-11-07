@@ -1,6 +1,6 @@
 
 from app.model.vocabulary import Vocabulary
-from app.model.alphabet import Syllabary
+from app.model.syllabary import Syllabary
 from typing import Optional
 
 

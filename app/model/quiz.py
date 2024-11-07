@@ -5,7 +5,7 @@ from itertools import islice
 from random import sample
 from typing import Optional
 from app.model import Model
-from app.model.alphabet import Character
+from app.model.syllabary import Character
 from app.model.vocabulary import Word
 from app.utils.exceptions import ResultsNotSet
 

@@ -1,5 +1,5 @@
 
-from app.model.alphabet import Syllabary
+from app.model.syllabary import Syllabary
 
 
 def test_alphabet_read():

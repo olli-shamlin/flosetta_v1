@@ -94,7 +94,7 @@ class Syllabary(UserList):
 
     @property
     def categories(self) -> list[str]:
-        raise NotImplementedError('alphabet.py/Syllabary.categories')
+        raise NotImplementedError('syllabary.py/Syllabary.categories')
 
     @property
     def is_dirty(self) -> bool:

@@ -1,5 +1,5 @@
 from app.model.statistic import Statistic
-from app.model.alphabet import Character
+from app.model.syllabary import Character
 from app.model.vocabulary import Word
 
 
