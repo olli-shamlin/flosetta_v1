@@ -5,6 +5,59 @@ from app import app
 from markupsafe import Markup
 
 
+def debug_msg(msg: str) -> None:
+    frm = inspect.stack()[1]
+    mod = inspect.getmodule(frm[0])
+    print(f'[DEBUG|{mod.__name__}>{frm.function}] {msg}')
+
+
+def info_msg(msg: str) -> None:
+    frm = inspect.stack()[1]
+    mod = inspect.getmodule(frm[0])
+    print(f'[INFO|{mod.__name__}>{frm.function}] {msg}')
+
+
+def error_msg(msg: str) -> None:
+    frm = inspect.stack()[1]
+    mod = inspect.getmodule(frm[0])
+    print(f'[INFO|{mod.__name__}>{frm.function}] {msg}')
+
+
+def tracer(func):
+
+    def wrapper(*args, **kwargs):
+
+        # Get the second frame (frame_info instance actually) on the top of the stack
+        stack = inspect.stack()
+        frame_info = stack[1]
+
+        # Extract the info we want to include on the trace line from the frame
+        fnc_name = func.__name__
+        fname_split = func.__globals__['__file__'].split('/')
+        filename = fname_split[-1]  # frame_info.filename.split('/')[-1]
+        if filename == '__init__.py':
+            filename = fname_split[-2] + '/' +  filename
+
+        mod_name = '__main__'
+        if __name__ != '__main__':
+            mod_name = func.__module__  # inspect.getmodule(frame_info[0]).__name__
+
+        cls_name = ''
+        if args:
+            mbrs = dict(inspect.getmembers(args[0]))
+            if '__class__' in mbrs.keys():
+                cls_name = mbrs['__class__'].__name__ + '.'
+
+        msg = f'{filename}: {mod_name}.{cls_name}{fnc_name}()'
+
+        print(f'[TRACER] ⬇︎ entering {msg}')
+        answer = func(*args, **kwargs)
+        print(f'[TRACER] ⬆︎ exiting {msg}')
+        return answer
+
+    return wrapper
+
+
 def _now() -> str:
     return datetime.datetime.now().strftime('%Y%m%d%H%M%S%f')
 
@@ -104,9 +157,3 @@ def resolve_icon(name: str) -> str:
 
     assert name in icon_map.keys()
     return icon_map[name]
-
-
-def debug_msg(msg: str):
-    frm = inspect.stack()[1]
-    mod = inspect.getmodule(frm[0])
-    print(f'[DEBUG/{mod.__name__}/{frm.function}] {msg}')

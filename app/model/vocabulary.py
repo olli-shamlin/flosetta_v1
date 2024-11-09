@@ -82,6 +82,7 @@ class Vocabulary(UserList):
 
     def __init__(self):
 
+        debug_msg('entering init')   # TODO remove; added for testing @tracer
         if Vocabulary._words is None:
 
             rows = fetch_vocab()
@@ -95,6 +96,7 @@ class Vocabulary(UserList):
                 Vocabulary._words.append(word)
 
         super().__init__(Vocabulary._words)
+        debug_msg('exiting init')   # TODO remove; added for testing @tracer
         return
 
     @property

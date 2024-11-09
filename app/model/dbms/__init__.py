@@ -3,7 +3,7 @@ import os
 import sqlite3
 from sqlite3 import Connection, Cursor
 from app import app
-from app.utils import FilePaths as files, debug_msg
+from app.utils import FilePaths as files, debug_msg, tracer
 from app.utils.exceptions import DatabaseExists
 from app.model.spreadsheet import import_kana, import_vocab
 
@@ -43,6 +43,7 @@ class _Schemas:
     )
 
 
+@tracer
 def _connect() -> Connection:
 
     db_path = files.test_database.full_path if app.config['USE_TEST_DB'] else files.prod_database.full_path
@@ -52,6 +53,7 @@ def _connect() -> Connection:
     return dbcon
 
 
+@tracer
 def _insert_kana_rows(csr: Cursor):
 
     debug_msg('inserting kana rows into database')
@@ -66,6 +68,7 @@ def _insert_kana_rows(csr: Cursor):
     return
 
 
+@tracer
 def _insert_test_vocab_rows(csr: Cursor):
 
     debug_msg('inserting TEST vocab rows into database')
@@ -106,6 +109,7 @@ def _insert_prod_vocab_rows(csr: Cursor):
     return
 
 
+@tracer
 def _insert_test_rows(csr: Cursor):
 
     _insert_test_vocab_rows(csr)
@@ -114,6 +118,7 @@ def _insert_test_rows(csr: Cursor):
     return
 
 
+@tracer
 def create():
 
     dbms_path = files.test_database.full_path if app.config['USE_TEST_DB'] else files.prod_database.full_path
@@ -145,6 +150,7 @@ def create():
     return
 
 
+@tracer
 def _fetch_all(select_stmt: str) -> list[tuple]:
 
     dbcon = _connect()
@@ -159,26 +165,32 @@ def _fetch_all(select_stmt: str) -> list[tuple]:
     return rows
 
 
+@tracer
 def fetch_kana() -> list[tuple]:
     return _fetch_all('SELECT _ROWID_, * FROM kana')
 
 
+@tracer
 def fetch_vocab() -> list[tuple]:
     return _fetch_all('SELECT _ROWID_, * FROM vocab')
 
 
+@tracer
 def fetch_parts_of_speech() -> list[tuple]:
     return _fetch_all('SELECT DISTINCT pos FROM vocab ORDER BY pos')
 
 
+@tracer
 def fetch_kana_categories() -> list[tuple]:
     return _fetch_all('SELECT DISTINCT category FROM kana ORDER BY category')
 
 
+@tracer
 def fetch_word_tags() -> list[tuple]:
     return _fetch_all('SELECT DISTINCT tag FROM vocab WHERE tag IS NOT NULL')
 
 
+@tracer
 def update_row(table: str, rec_id: int, col_value_map: dict[str, int]) -> None:
 
     # TODO: modify update row to support other column values types besides INTEGER
