@@ -88,6 +88,7 @@ class FilePaths:
     _vocab_spreadsheet_name = 'vocabulary'
     _kana_spreadsheet_name = 'kana'
     _spreadsheet_extension = 'numbers'
+    _test_spreadsheet_name = 'test_workbook'
 
     prod_database = _FilePath(_local_path,  _prod_database_name, _database_extension)
     test_database = _FilePath(_local_path, _test_database_name, _database_extension)
@@ -99,6 +100,7 @@ class FilePaths:
     kana_spreadsheet = _FilePath(_local_path, _kana_spreadsheet_name, _spreadsheet_extension)
     glob_kana = _FilePath(_backup_path, f'{kana_spreadsheet.name}-*', kana_spreadsheet.extension)
     backup_kana = _FilePath(_backup_path, f'{kana_spreadsheet.name}-{_now()}', kana_spreadsheet.extension)
+    test_spreadsheet = _FilePath(_local_path, _test_spreadsheet_name, _spreadsheet_extension)
 
 
 def resolve_icon(name: str) -> str:

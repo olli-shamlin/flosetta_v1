@@ -6,18 +6,14 @@ from typing import Optional
 
 class Model:
 
+    _vocabulary: Optional[Vocabulary] = None
     _syllabary: Optional[Syllabary] = None
-
-    def __init__(self):
-        self._vocabulary: Optional[list[Vocabulary]] = None
-        # self._alphabet: Optional[Alphabet] = None
-        return
 
     @property
     def vocabulary(self) -> Vocabulary:
-        if self._vocabulary is None:
-            self._vocabulary = Vocabulary()
-        return self._vocabulary
+        if Model._vocabulary is None:
+            Model._vocabulary = Vocabulary()
+        return Model._vocabulary
 
     @property
     def syllabary(self) -> Syllabary:
